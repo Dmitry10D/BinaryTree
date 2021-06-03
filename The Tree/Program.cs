@@ -24,21 +24,43 @@ namespace The_Tree
         }
     }
 
-    public class TreeNode
+    public static class Sercher
     {
-        public int Value { get; set; }
-        public TreeNode LeftChild { get; set; }
-        public TreeNode RightChild { get; set; }
-
-        public override bool Equals(object obj)
+        public static TreeNode DeepFirstSearch(ITree tree, int value)
         {
-            var node = obj as TreeNode;
-
-            if (node == null) return false;
-
-            return node.Value == Value;
+            var stack = new Stack<TreeNode>();
+            stack.Push(tree.GetRoot());
+            while (stack.Count!=0)
+            {
+                var tmp = stack.Pop();
+                if (tmp.Value == value) return tmp;
+                else
+                {
+                    stack.Push(tmp.LeftChild);
+                    stack.Push(tmp.RightChild);
+                }
+            }
+            return null;
+        }
+        public static TreeNode BreadthFirstSearch (ITree tree, int value)
+        {
+            var queue = new Queue<TreeNode>();
+            queue.Enqueue(tree.GetRoot());
+            while (queue.Count != 0)
+            { 
+                var tmp = queue.Dequeue();
+                if (tmp.Value == value) return tmp;
+                else
+                {
+                    if (tmp.LeftChild != null) queue.Enqueue (tmp.LeftChild);
+                    if (tmp.RightChild != null) queue.Enqueue (tmp.RightChild);
+                }
+            }
+            return null;
         }
     }
+
+    
 
     public class BinarySearchTree : ITree
     {
