@@ -16,9 +16,9 @@ namespace The_Tree
                 string command = Console.ReadLine();
 
                 if (command == "add") Tree.AddItem(Int32.Parse(Console.ReadLine()));
-                if (command == "search") Tree.GetNodeByValue(Int32.Parse(Console.ReadLine()));
-                if (command == "root") Tree.GetRoot();
-                if (command == "print") BinarySearchTree.PrintArray(Tree);
+                else if (command == "search") Tree.GetNodeByValue(Int32.Parse(Console.ReadLine()));
+                else if (command == "root") Tree.GetRoot();
+                else if (command == "del") Tree.RemoveItem(Int32.Parse(Console.ReadLine()));
                 
             }
         }
@@ -174,7 +174,8 @@ namespace The_Tree
 
         public void AddItem (int value)
         {
-            AddNode(this.Root, value);
+            if (Root == null) Root = AddNode(Root, value);
+            else AddNode(Root, value);
         }
         private TreeNode AddNode (TreeNode Root, int value)
         {
@@ -351,46 +352,3 @@ namespace The_Tree
         }   
     }
 }
-
-//TreeNode tmp = null;
-//if (head == null)
-//{
-//    head = GetFreeNode(value, null);
-//    //head.Value = value;
-//    return head;
-//}
-//tmp = head;
-//while (tmp != null)
-//{
-//    if (tmp.Value < value)
-//    {
-//        if (tmp.LeftChild != null)
-//        {
-//            tmp = tmp.LeftChild;
-//            continue;
-//        }
-//        else
-//        {
-//            tmp.LeftChild = GetFreeNode(value, tmp);
-//            return head;
-//        }
-//    }
-//    else if (tmp.Value > value)
-//    {
-//        if (tmp.RightChild != null)
-//        {
-//            tmp = tmp.RightChild;
-//            continue;
-//        }
-//        else
-//        {
-//            tmp.RightChild = GetFreeNode(value, tmp);
-//            return head;
-//        }
-//    }
-//    else
-//    {
-//        throw new Exception("Wrong tree state");
-//    }
-//}
-//return head;
