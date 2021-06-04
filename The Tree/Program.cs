@@ -11,15 +11,24 @@ namespace The_Tree
         static void Main(string[] args)
         {
             BinarySearchTree Tree = new BinarySearchTree();
+
+            int[] arr = new int[] {25, 13, 86, 4, 17, 48, 97, 1, 9, 14, 21, 31, 53, 90, 100 };
+            for(var i = 0; i <arr.Length; i++)
+            {
+                Tree.AddItem(arr[i]);
+            }
+
+
             while(true)
             {
                 string command = Console.ReadLine();
 
                 if (command == "add") Tree.AddItem(Int32.Parse(Console.ReadLine()));
-                else if (command == "search") Tree.GetNodeByValue(Int32.Parse(Console.ReadLine()));
-                else if (command == "root") Tree.GetRoot();
+                else if (command == "search") { if (Tree.GetNodeByValue(Int32.Parse(Console.ReadLine())) != null) Console.WriteLine("found"); }
+                else if (command == "root") Console.WriteLine(Tree.GetRoot().Value);
                 else if (command == "del") Tree.RemoveItem(Int32.Parse(Console.ReadLine()));
                 
+
             }
         }
     }
@@ -242,18 +251,20 @@ namespace The_Tree
                 {
                     if (node.LeftChild != null && node.RightChild != null)
                     {
-                        node.Value = node.RightChild.LeftChild.Value;
-                        RemoveNode(node.RightChild.LeftChild, value);
+                        node.Value = node.RightChild.Value;
+                        node.RightChild = RemoveNode(node.RightChild, node.RightChild.Value);
                         return node;
                     }
                     else if (node.LeftChild != null && node.RightChild == null)
                     {
                         node = node.LeftChild;
+                        //node.LeftChild = RemoveNode(node.LeftChild, node.LeftChild.Value);
                         return node;
                     }
                     else if (node.LeftChild == null && node.RightChild != null)
                     {
                         node = node.RightChild;
+                        //node.RightChild = RemoveNode(node.RightChild, node.RightChild.Value);
                         return node;
                     }
                     else
@@ -264,12 +275,12 @@ namespace The_Tree
                 }
                 else if (node.Value < value)
                 {
-                    RemoveNode(node.RightChild, value);
+                    node.RightChild = RemoveNode(node.RightChild, value);
                     return node;
                 }
                 else
                 {
-                    RemoveNode(node.LeftChild, value);
+                    node.LeftChild = RemoveNode(node.LeftChild, value);
                     return node;
                 }
             }
